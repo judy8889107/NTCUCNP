@@ -35,7 +35,7 @@ while True:
     c,ad=s.accept()
     # Display message when user connects
     print('*Server Connected ')
-    print (host)
+    print (host) # 測試用
     clients.append(c)
     c.send(('Online ('+str(clients.index(c)+1)+')').encode('ascii'))
     _thread.start_new_thread(connectNewClient,(c,))
