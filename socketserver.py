@@ -24,7 +24,7 @@ def connectNewClient(c):
      while True:
         global clients
         msg = c.recv(2048)
-        msg ='User ('+str(clients.index(c)+1)+'):  '+msg.decode('UTF-8')
+        msg ='User('+str(clients.index(c)+1)+'):'+msg.decode('UTF-8')
         sendToAll(msg,c)
 def sendToAll(msg,con):
     for client in clients:
@@ -37,5 +37,5 @@ while True:
     print('*Server Connected ')
     print (host) # 測試用
     clients.append(c)
-    c.send(('User ('+str(clients.index(c)+1)+')').encode('UTF-8'))
+    c.send(('User('+str(clients.index(c)+1)+')').encode('UTF-8'))
     _thread.start_new_thread(connectNewClient,(c,))

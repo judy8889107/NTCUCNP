@@ -9,14 +9,21 @@ import sys
 i = 3
 client = 0
 start = True
+record_self=True
+record_self_num=None
 def sendMessage ():
     msg = txt.get()
     client.send(msg.encode('UTF-8'))
+   
 
 def recievingMessage (c): 
-    global i,txt
+    global i,txt,record_self_num,record_self
     while True :
         msg=c.recv(2048).decode('UTF-8')
+        if record_self:
+            record_self_num=msg
+            record_self=False
+            
         if not msg :
             sys.exit(0)
         global start
@@ -25,12 +32,24 @@ def recievingMessage (c):
             #tkinter codes starts
             window.title(msg)
             continue
-        msglbl = tkinter.Label(window,text=msg)
-        msglbl['font']=("Courier",10)
-        msglbl['bg']='black'
-        msglbl['fg']='#0aff43'
-        msglbl['width']=50
-        msglbl.grid(column=0,row=i,sticky=tkinter.E)
+        
+        
+        if msg.find(record_self_num)!= -1:
+            t=msg[8:]
+            msglbl = tkinter.Label(window,text=t,anchor=tkinter.E)
+            msglbl['bg']='#D6F2D3'
+            msglbl['fg']='black'
+            
+        else:
+            msglbl = tkinter.Label(window,text=msg,anchor=tkinter.W)
+            msglbl['bg']='#555555'
+            msglbl['fg']='#DFDFDF'
+
+        msglbl['font']=("Courier",12)   
+        msglbl['width']=35     
+        
+       
+        msglbl.grid(column=0,row=i)
         txt.delete("0","end")
         i += 1
 #Socket Creation
@@ -47,6 +66,7 @@ def socketCreation ():
     client = c
     send['command'] = sendMessage
     _thread.start_new_thread(recievingMessage, (c,) )
+    
 
 
 #Creating a window
