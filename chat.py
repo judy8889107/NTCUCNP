@@ -30,8 +30,8 @@ def recievingMessage (c):
         msglbl['bg']='black'
         msglbl['fg']='#0aff43'
         msglbl['width']=50
-        msglbl.grid(columnspan=2,column=0,row=i,padx=5)
-        #txt.delete("1.0","end")
+        msglbl.grid(column=0,row=i,sticky=tkinter.E)
+        txt.delete("0","end")
         i += 1
 #Socket Creation
 def socketCreation ():    
