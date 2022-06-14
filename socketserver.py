@@ -18,16 +18,16 @@ def connectNewClient(c):
      while True:
         global clients
         msg = c.recv(2048)
-        msg ='Online ('+str(clients.index(c)+1)+'):  '+msg.decode('ascii')
+        msg ='Online ('+str(clients.index(c)+1)+'):  '+msg.decode('UTF-8')
         sendToAll(msg,c)
 def sendToAll(msg,con):
     for client in clients:
-        client.send(msg.encode('ascii')) 
+        client.send(msg.encode('UTF-8')) 
         
 while True:
     c,ad=s.accept()
     # Display message when user connects
     print('*Server Connected ')
     clients.append(c)
-    c.send(('Online ('+str(clients.index(c)+1)+')').encode('ascii'))
+    c.send(('Online ('+str(clients.index(c)+1)+')').encode('UTF-8'))
     _thread.start_new_thread(connectNewClient,(c,))

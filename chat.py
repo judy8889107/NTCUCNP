@@ -11,12 +11,12 @@ client = 0
 start = True
 def sendMessage ():
     msg = txt.get()
-    client.send(msg.encode('ascii'))
+    client.send(msg.encode('UTF-8'))
 
 def recievingMessage (c): 
-    global i
+    global i,txt
     while True :
-        msg=c.recv(2048).decode('ascii')
+        msg=c.recv(2048).decode('UTF-8')
         if not msg :
             sys.exit(0)
         global start
@@ -31,6 +31,7 @@ def recievingMessage (c):
         msglbl['fg']='#0aff43'
         msglbl['width']=50
         msglbl.grid(columnspan=2,column=0,row=i,padx=5)
+        #txt.delete("1.0","end")
         i += 1
 #Socket Creation
 def socketCreation ():    
@@ -61,13 +62,13 @@ txt = tkinter.Entry(window)
 txt['width']=50
 txt['relief']=tkinter.GROOVE
 txt['bg']='#f5f6f7'
-txt['fg']='red'
+txt['fg']='black' #字顏色
 txt['font']=("Courier",12)
 txt.grid(column=0,row=1,padx=5,pady=15)
 #Button
 send = tkinter.Button(window,text="Send")
 send['relief']=tkinter.GROOVE
-send['bg']='red'
+send['bg']='#00B600'#按鍵顏色
 send['fg']='white'
 send['activebackground']='#404040'
 send['padx']=3
