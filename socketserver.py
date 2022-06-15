@@ -32,11 +32,17 @@ def connectNewClient(c):
 
         else: # 若收到訊息為空則移除User
             print('server closed connection.')
+            print('Remove', str(c))
             clients.remove(c)
 
 def sendToAll(msg,con):
+    # print(clients)
+    # 如果找不到client就跳過
     for client in clients:
-        client.send(msg.encode('UTF-8')) 
+        try:
+            client.send(msg.encode('UTF-8'))
+        except:
+            continue
         
 
 while True:
