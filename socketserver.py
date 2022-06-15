@@ -20,12 +20,20 @@ s.bind((host,port))
 s.listen(5)
 clients=[]
 #code to allow users to send messages
+
 def connectNewClient(c):
+
      while True:
         global clients
-        msg = c.recv(2048)
-        msg ='User('+str(clients.index(c)+1)+'):'+msg.decode('UTF-8')
-        sendToAll(msg,c)
+        msg = c.recv(2048) # server收到訊息
+        if len(msg) != 0: # 若長度不為0則傳送出去給其他User
+            msg ='User('+str(clients.index(c)+1)+'):'+msg.decode('UTF-8')
+            sendToAll(msg,c)
+
+        else: # 若收到訊息為空則移除User
+            print('server closed connection.')
+            clients.remove(c)
+
 def sendToAll(msg,con):
     for client in clients:
         client.send(msg.encode('UTF-8')) 
@@ -39,3 +47,6 @@ while True:
     clients.append(c)
     c.send(('User('+str(clients.index(c)+1)+')').encode('UTF-8'))
     _thread.start_new_thread(connectNewClient,(c,))
+
+c.close()
+s.close()
