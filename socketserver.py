@@ -44,7 +44,7 @@ def sendToAll(msg,con):
         except:
             continue
         
-
+print ("Server已啟動")
 while True:
     c,ad=s.accept()
     # Display message when user connects
