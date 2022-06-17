@@ -19,7 +19,6 @@ def sendMessage ():
 
 def recievingMessage (c): 
     global i,txt,record_self_num,record_self
-
     while True :
         msg=c.recv(2048).decode('UTF-8') # 接收訊息
         if record_self: 
@@ -63,22 +62,18 @@ def recievingMessage (c):
 def socketCreation ():    
     c = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # 建立IPv4, UDP socket
     c.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1) # 設定socket option
-#Local Host    
-# import all functions /
-#  everthing from chat.py file
     
     # 預設host為127.0.0.1(方便測試)
     host = "127.0.0.1"
     # 若有輸入參數則為預設參數
     if len(sys.argv)==2:
         host = sys.argv[1]
-
-    port = 5000
+    port = 5000 # 預設port 5000
     c.connect((host,port))
     global client
     client = c
     send['command'] = sendMessage # 若按下傳送button則執行sendMessage
-    _thread.start_new_thread(recievingMessage, (c,) )
+    _thread.start_new_thread(recievingMessage, (c,) ) # 執行thread
     
 
 
